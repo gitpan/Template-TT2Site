@@ -1,4 +1,4 @@
-[% # $Id: layout,v 1.4 2005/01/14 20:20:56 jv Exp $ -%]
+[% # $Id: layout,v 1.5 2005/01/16 16:09:40 jv Exp $ -%]
 <table width="100%" border="0" cellpadding="0" cellspacing="5">
 
   <tr valign="top">
@@ -43,7 +43,7 @@
 
   <tr valign="top">
     <td>
-      [% PROCESS page/menu indent="0.1in" UNLESS page.suppress_menu %]
+      [% PROCESS page/menu UNLESS page.suppress_menu %]
     </td>
     <td>
       [% content %]

@@ -1,4 +1,4 @@
-[% # $Id: site,v 1.1 2004/12/29 16:08:19 jv Exp $ -%]
+[% # $Id: site,v 1.2 2005/01/16 16:14:30 jv Exp $ -%]
 [%
 
 site = {
@@ -18,5 +18,7 @@ THEN;
   year = firstyear _ "-" _ year;
 END;
 site.copyright = "&copy; Copyright ${year} Squirrel Consultancy. All Rights Reserved."
+site.design = "Site design: <a href='http://www.squirrel.nl'>Squirrel Consultancy</a> using
+<a href='http://www.squirrel.nl/people/jvromans/tt2site/'>TT2Site</a>."
 
 -%]

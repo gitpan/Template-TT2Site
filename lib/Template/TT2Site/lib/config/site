@@ -1,4 +1,4 @@
-[% # $Id: site,v 1.3 2004/12/05 11:57:46 jv Exp $ -%]
+[% # $Id: site,v 1.4 2005/01/16 16:09:40 jv Exp $ -%]
 [%
 
 # Site data. Please override.
@@ -19,6 +19,11 @@ IF year > firstyear;
 THEN;
   year = firstyear _ "-" _ year;
 END;
-site.copyright = "&copy; Copyright ${year} ${site.title}. All Rights Reserved."
+site.copyright = "Copyright &copy; ${year} ${site.title}. All Rights Reserved."
+
+# Design.
+site.design = "This site was created using the
+<a href='http://www.squirrel.nl/people/jvromans/tt2site/'>TT2Site
+Site Builder</a>."
 
 -%]

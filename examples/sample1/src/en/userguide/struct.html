@@ -54,6 +54,14 @@ This file is the configuration for the <code>ttree</code> processor
 that is used internally by <code>tt2site</code>. You shouldn't need to
 modify this.
 
+<b>Note:</b> If you moved your TT2Site installation, it is possible
+that you get the following errors:
+<pre>   ! file error - config/main: not found
+</pre>
+This may indicate that the location registered in
+<code>etc/ttree.cfg</code> is no longer valid. If this case, you need
+to vidually inspect its contents, and correct any invalid locations.
+
 <p>What you do need to modify are the files in the <code>lib</code>
 directory: </p>
 <pre>    lib/config/site

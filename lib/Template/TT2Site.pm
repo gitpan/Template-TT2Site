@@ -3,7 +3,7 @@ package Template::TT2Site;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = sprintf("%d.%02d", q$Revision: 1.44 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.45 $ =~ /(\d+)\.(\d+)/);
 
 use strict;
 
@@ -363,6 +363,7 @@ sub realclean {
     chdir(_cf($sitelib, qw(Template TT2Site setup data)));
     find(sub {
 	     return unless -f $_;
+	     return unless -f _cf($cur, $File::Find::name);
 	     push(@{_differ($_, _cf($cur, $File::Find::name))
 		  ? \@chfiles : \@files}, $File::Find::name);
 	 }, ".");
