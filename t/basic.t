@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+use strict;
 use Test::More tests => 2;
 
 BEGIN { use_ok("Template::TT2Site"); }
