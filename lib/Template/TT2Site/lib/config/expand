@@ -1,4 +1,4 @@
-[% # $Id: expand,v 1.2 2004/12/05 11:57:46 jv Exp $ -%]
+[% # $Id: expand,v 1.3 2005/01/11 22:25:23 jv Exp $ -%]
 [%
 
 # page.trail tracks path to the current page.
@@ -30,7 +30,7 @@ FOREACH id IN map.menu;
 
     # Set next/last if this is the actual page.
     IF item.here;
-	page.prev = map.page.${loop.last};
+	page.prev = map.page.${loop.prev};
 	page.next = map.page.${loop.next};
     END;
 

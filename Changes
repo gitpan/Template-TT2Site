@@ -1,3 +1,8 @@
+* 0.93 Jan 14, 2005
+
+   - Withdraw .html suffix for page/ files.
+   - Several corrections and updates to the documentation.
+
 * 0.92 Jan 05, 2005
 
    - Add missing examples/sample0/src/download.html.

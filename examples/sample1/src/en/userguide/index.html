@@ -17,17 +17,19 @@ tools to install <b>Template::TT2Site</b> for you.
 following information in your perl install tree:
 
 <pre>  Template/TT2Site.pm  -- the module
-  Template/TT2Site/    -- the library
+  Template/TT2Site/    -- the <b>TT2Site</b> library
 </pre>
 
-<p>When the <b>tt2site</b> tool is run, it will use the standard perl
-search path <code>@INC</code> to locate this information.
+<p>When the <code>tt2site</code> tool is run, it will use the standard
+perl search path <code>@INC</code> to locate this information.
 
-Should it be necessary to install or use multiple versions of
-<b>Template::TT2Site</b> you can move the <b>TT2Site</b> module and
+<p>Should it be necessary to install or use multiple versions of
+<b>Template::TT2Site</b>, you can move the <b>TT2Site</b> module and
 library to an arbitrary location, and set the environment variable
-<b>TT2SITE_LIB</b> to this location. For example, the following Bash
-shell commands will move your current <b>tt2site</b> kit to location
+<b>TT2SITE_LIB</b> to this location.
+
+<p>For example, the following Bash shell commands will move your
+current <b>Template::TT2Site</b> kit to location
 <code>/opt/tt2site-1.01</code>:
 
 <pre>  $ mkdir /opt/mytt2site-1.01

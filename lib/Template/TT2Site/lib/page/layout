@@ -1,34 +1,34 @@
-[% # $Id: layout.html,v 1.3 2005/01/05 18:00:02 jv Exp $ -%]
+[% # $Id: layout,v 1.4 2005/01/14 20:20:56 jv Exp $ -%]
 <table width="100%" border="0" cellpadding="0" cellspacing="5">
 
   <tr valign="top">
     <td width="[% site.logowidth + 10 %]" align="left">
-      [% PROCESS page/logo.html %]
+      [% PROCESS page/logo %]
     </td>
     <td>
       [% IF site.languages && template.name.search('^\w\w/') -%]
         <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	  <tr>
 	    <td align="left" valign="top">
-              [% PROCESS page/header.html %]
+              [% PROCESS page/header %]
 	    </td>
 	    <td align="right" valign="top">
-              [% PROCESS page/lang.html %]
+              [% PROCESS page/lang %]
 	    </td>
 	  </tr>
 	</table>
       [% ELSE -%]
-        [% PROCESS page/header.html %]
+        [% PROCESS page/header %]
       [% END -%]
     </td>
   </tr>
 
   <tr>
     <td>
-      [% PROCESS page/name.html %]
+      [% PROCESS page/name %]
     </td>
     <td>
-      [% PROCESS page/navigate.html %]
+      [% PROCESS page/navigate %]
     </td>
   </tr>
 
@@ -43,7 +43,7 @@
 
   <tr valign="top">
     <td>
-      [% PROCESS page/menu.html indent="0.3in" UNLESS page.suppress_menu %]
+      [% PROCESS page/menu indent="0.1in" UNLESS page.suppress_menu %]
     </td>
     <td>
       [% content %]
@@ -61,10 +61,10 @@
 
   <tr valign="bottom">
     <td valign="middle">
-      [% PROCESS page/credits.html %]
+      [% PROCESS page/credits %]
     </td>
     <td align="center">
-      [% PROCESS page/footer.html %]
+      [% PROCESS page/footer %]
     </td>
   </tr>
 

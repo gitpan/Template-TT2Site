@@ -1,63 +1,95 @@
-<b>Template::TT2Site</b> works with two main sub-directories: 'src'
-and 'html'.  These contain the raw input and the final output versions
-of your website.
+When setting up a web site as described in chapter 11 of the <i>Badger
+Book</i>, you use a work area where three directories are particulary
+important.
 
-<p>The 'src' directory is created when you run <code>setup<code>, and
-the 'html' directory is created when you first use the <code>build</code>
-subcommand.
+<p>Directory <code>src</code> is where you put the templates that will
+produce the actual HTML pages for the site. In general, each template
+in this directory will produce exactly one HTML document.
 
-<p>By default, <b>tt2site</b> creates the following subdirectiories in
-'src':
+<br>When these templates are processed, they make use of library
+templates and other tools that reside in the <code>lib</code>
+directory.
+
+<br>Finally, the resultant HTML documents will be put in directory
+<code>html</code>.
+
+<p><b>Template::TT2Site</b> supports this process in the following
+ways:</p>
+
+<ul>
+  <li>It sets up the basic
+      structure of the work area: the <code>src</code>
+      and <code>lib</code>
+      directories, and populates them with start data. The <code>html</code>
+      directory will be created automatically later. </li>
+  <li>It will configure the
+      information so that library materials can come from <i>two</i>
+      sources: from your <code>lib</code>
+      directory, or from a library that <b>Template::TT2Site</b>
+      provides for you. Since in normal cases you will use many library
+      templates 'as is', you need only provide the templates that differ from
+      the standard version. </li>
+  <li>It will perform the
+      necessary steps to process your templates into HTML files in the <code>html</code>
+      using one simple command: <b>tt2site</b>. </li>
+</ul>
+
+<p>By default, <b>tt2site setup</b> creates the following
+subdirectiories in <code>src</code>:</p>
+
 <pre>    src/images
-    src/css
-</pre>
+    src/css<br></pre>
 
 <p><code>css</code> contains the style sheet for the site. As you
 might guess, you can edit <code>css/site.css</code> to change a number
-of aspects of the look of your website one place.
+of aspects of the look of your website.
 
-You will also see that an 'etc' directory has been created, with
-this file in it:
+<p>You will also notice that an <code>etc</code> directory has been
+created, with a single file in it:</p>
 
 <pre>    etc/ttree.cfg
 </pre>
 
-You shouldn't need to modify this.
+This file is the configuration for the <code>ttree</code> processor
+that is used internally by <code>tt2site</code>. You shouldn't need to
+modify this.
 
-<p>What you do need to modify are the files in the 'lib' directory:
+<p>What you do need to modify are the files in the <code>lib</code>
+directory: </p>
 <pre>    lib/config/site
-    lib/config/images
-</pre>
+    lib/config/images<br></pre>
 
-<b>Template::TT2Site</b> site is configured to take templates from two
-sources: from the local directory, and from the <b>TT2Site</b> library.
-The templates in the library directory provide (almost) all the
-necessary information to create the site (except for the contents, of
-course), the library templates can be overruled locally to customize a
-particular site.
-
-<p>The <b>TT2Site</b> library templates reside in the <code>lib</code>
-directory. Its major subdirectories are <code>config</code>
-(configuration data), <code>page</code> (page formatting), and
-<code>util</code> (utility functions).
+The standard library resides under the <code>lib</code> directory of
+the <b>Template::TT2Site</b> installation. Its major subdirectories
+are <code>config</code> (configuration data), <code>page</code> (page
+formatting), and <code>util</code> (utility functions).
 
 <p>For the time being, the contents of the files need to be taken as a
 guide how to write your own. Here is a short description of some
-files:
+files:</p>
 
 <dl>
-<dt><code>config/main</code>
-<dd>This file controls which other files from the site directory are taken into account.
-<dt><code>config/site</code>
-<dd>The site data like title and subject. This file must be overridden with actual data.
-<dt><code>config/images</code>
-<dd>The definition of images to be used with the util/image template function.
-<dt><code>config/lang</code>
-<dd>The definition of the languages to be used by this site.
-<dt><code>page/wrapper</code>
-<dd>This file controls what templates are applied when processing user files.
-<dt><code>page/html.html</code>
-<dd>This template provides the general HTML structure of the generated pages.
-<dt><code>page/layout.html</code>
-<dd>This template defines the structure of the generated pages. It uses the familiar table approach with cells containing the logo, header, menu, contents, footer, and so on.
+  <dt><code>config/main</code></dt>
+  <dd>This file controls which
+      other files from the site directory are taken into account.</dd>
+  <dt><code>config/site</code></dt>
+  <dd>The site data like title and
+      subject. This file must be overridden with actual data.</dd>
+  <dt><code>config/images</code></dt>
+  <dd>The definition of images to
+      be used with the util/image template function.</dd>
+  <dt><code>config/lang</code></dt>
+  <dd>The definition of the
+      languages to be used by this site.</dd>
+  <dt><code>page/wrapper</code></dt>
+  <dd>This file controls what
+      templates are applied when processing user files.</dd>
+  <dt><code>page/html</code></dt>
+  <dd>This template provides the
+      general HTML structure of the generated pages.</dd>
+  <dt><code>page/layout</code></dt>
+  <dd>This template defines the
+      structure of the generated pages. It uses the familiar table approach
+      with cells containing the logo, header, menu, contents, footer, and so
+      on.</dd>
 </dl>

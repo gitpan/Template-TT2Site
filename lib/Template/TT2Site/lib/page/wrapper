@@ -1,4 +1,4 @@
-[% # $Id: wrapper,v 1.3 2005/01/05 18:00:02 jv Exp $ -%]
+[% # $Id: wrapper,v 1.4 2005/01/14 20:20:56 jv Exp $ -%]
 [%
 
 SWITCH page.type;
@@ -6,11 +6,11 @@ SWITCH page.type;
 	content;
 
     CASE "html";
-	content WRAPPER page/html.html
-		      + page/layout.html;
+	content WRAPPER page/html
+		      + page/layout;
 
     CASE "nolayout";
-	content WRAPPER page/html.html;
+	content WRAPPER page/html;
 
     CASE;
 	THROW page.type "Invalid page type: $page.type";
