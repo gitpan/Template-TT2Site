@@ -1,0 +1,24 @@
+[% # $Id: site,v 1.3 2004/12/05 11:57:46 jv Exp $ -%]
+[%
+
+# Site data. Please override.
+
+site = {
+    title    = "Template::TT2Site"
+    short    = "TT2Site"
+    about    = "A Template::Toolkit extension"
+    mailto   = "mailto:website@squirrel.nl"
+};
+
+# Copyright notice.
+
+USE date;
+firstyear = 2004;
+year = date.format(date.now,'%Y','en_GB');
+IF year > firstyear;
+THEN;
+  year = firstyear _ "-" _ year;
+END;
+site.copyright = "&copy; Copyright ${year} ${site.title}. All Rights Reserved."
+
+-%]

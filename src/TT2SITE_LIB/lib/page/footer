@@ -1,0 +1,5 @@
+[% # $Id: footer,v 1.2 2004/12/05 11:57:46 jv Exp $ -%]
+<p class="info">
+[%- site.copyright _ "<br />\n" IF site.copyright -%]
+[% page.file %] last modified [% page.date %]
+</p>

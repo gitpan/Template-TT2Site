@@ -1,0 +1,71 @@
+[% # $Id: layout,v 1.2 2004/12/05 11:57:46 jv Exp $ -%]
+<table width="100%" border="0" cellpadding="0" cellspacing="5">
+
+  <tr valign="top">
+    <td width="[% site.logowidth + 10 %]" align="left">
+      [% PROCESS page/logo %]
+    </td>
+    <td>
+      [% IF site.languages && template.name.search('^\w\w/') -%]
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	  <tr>
+	    <td align="left" valign="top">
+              [% PROCESS page/header %]
+	    </td>
+	    <td align="right" valign="top">
+              [% PROCESS page/lang %]
+	    </td>
+	  </tr>
+	</table>
+      [% ELSE -%]
+        [% PROCESS page/header %]
+      [% END -%]
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      [% PROCESS page/name %]
+    </td>
+    <td>
+      [% PROCESS page/navigate %]
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      [% PROCESS util/line %]
+    </td>
+    <td>
+      [% PROCESS util/line %]
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td>
+      [% PROCESS page/menu indent="0.3in" UNLESS page.suppress_menu %]
+    </td>
+    <td>
+      [% content %]
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      [% PROCESS util/line %]
+    </td>
+    <td>
+      [% PROCESS util/line %]
+    </td>
+  </tr>
+
+  <tr valign="bottom">
+    <td valign="middle">
+      [% PROCESS page/credits %]
+    </td>
+    <td align="center">
+      [% PROCESS page/footer %]
+    </td>
+  </tr>
+
+</table>

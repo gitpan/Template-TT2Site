@@ -1,0 +1,19 @@
+Template::TT2Site is a framework to create web sites using the
+Template Toolkit.
+
+The technical structure of the site is patterned after the method
+described in I<The Badger Book>. The structure has been slightly
+simplified for ease of use, and a couple of neat features are added:
+
+* The resultant site is position independent, i.e., it only uses
+  relative URLs to the extent possible. This makes it easy to build
+  partial sites, and to relocate the contents.
+
+* The necessary means are provided to create multi-language sites, where
+  each page gets a link to its translations.
+
+* The 'site.map' hash, required for site navigation, is created
+  automatically using minimal, position independent, directions.
+
+For more information, see the Template/TT2Site.pm module.
+

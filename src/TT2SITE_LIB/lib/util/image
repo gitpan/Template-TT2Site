@@ -1,0 +1,9 @@
+[% # $Id: image,v 1.2 2004/12/05 11:57:46 jv Exp $ -%]
+[%
+
+# Image, without borders.
+
+-%]
+<img src="[% image.src %]" alt="[% image.alt %]"
+     [%- ' align="' _ image.align _ '" ' IF image.align -%]
+     width="[% image.width %]" height="[% image.height %]" border="0" />

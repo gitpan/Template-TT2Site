@@ -1,0 +1,20 @@
+Most web sites use a menu to navigate. <b>Template::TT2Site</b>
+automatically creates the menu, using <b>.map</b> files placed in the
+directories to navigate. The avantage of <b>.map</b> files is that they
+can easily be maintained with the directory data, and directories can
+be moved to another location taking the map data with them.
+
+<p>The <b>.map</b> files contain lines as follows:
+
+<pre>  menu "Title" target
+</pre>
+
+<p>The target will appear in the menu as "Title". The target can be an
+HTML page (if the file <i>target</i><tt>.html</tt> exists), a
+directory (if it exists, introducing a new level of navigation),
+otherwise it will be taken to be an arbitrary URL.
+
+<p>In addition, the top level <tt>.map</tt> must contain an entry
+
+<pre>  title "Menu Title"
+</pre>
