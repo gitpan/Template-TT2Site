@@ -1,18 +1,15 @@
-<p><b>Template::TT2Site</b> does not need to be installed, just unpack
-it in an arbitrary location. There are only two requirements to use
-it:
+<p><b>Template::TT2Site</b> needs to be installed before it can be
+used. You can do this by unpacking the kit it in an arbitrary
+location, and issue the following commands:
 
-<ul>
-  <li>Environment variable <tt>TT2SITE_LIB</tt> must point to the
-      installation.
-  <li>The installation location must be made available to the Perl
-      search path.
-</ul>
-
-<p>The installation directory contains the usual <tt>Makefile.PL</tt>.
-Although there is nothing needed to install, running
-
-<pre>  perl Makefile.PL
+<pre>  perl Build.PL
+  Build
+  Build install
 </pre>
 
-will check your installation for completeness.
+Alternatively, you can use the <tt>CPAN</tt> or <tt>CPANPLUS</tt>
+tools to install <tt>tt2site</tt> for you.
+
+<p>Note that the last command requires write access to your local Perl
+installtion.
+

@@ -1,6 +1,6 @@
-package TT2Site;
+package Template::TT2Site;
 
-( $VERSION ) = '$Revision: 1.3 $ ' =~ /\$Revision:\s+([^\s]+)/;
+( $VERSION ) = '$Revision: 1.4 $ ' =~ /\$Revision:\s+([^\s]+)/;
 
 # NOTE: This is a documentation-only module.
 
@@ -14,9 +14,9 @@ Template::TT2Site - Create standard web sites with the Template Toolkit
 
   $ mkdir NewSite
   $ cd NewSite
-  $ make -f $TT2SITE_LIB/common.mk setup
+  $ tt2site setup
   ... make your pages ...
-  $ make
+  $ tt2site build
   ... point your browser at html/index.html ...
 
 =head1 DESCRIPTION
@@ -106,36 +106,34 @@ menu, contents, footer, and so on.
 
 =head2 Getting Started
 
-B<Template::TT2Site> does not need to be installed, just unpack it in
-an arbitrary location. There are only two requirements to use it:
+B<Template::TT2Site> needs to be installed before it can be
+used. You can do this by unpacking the kit it in an arbitrary
+location, and issue the following commands:
 
-=over 4
+  perl Build.PL
+  Build
+  Build install
 
-=item *
+(To see what gets installed, and where, use the target C<fakeinstall>
+instead of C<install>).
 
-Environment variable C<TT2SITE_LIB> must point to the installation.
+Alternatively, you can use the C<CPAN> or C<CPANPLUS> tools to install
+C<t2site> for you.
 
-=item *
+Note that the last command requires write access to your local Perl
+installtion.
 
-The installation location must be made available to the Perl search path.
-
-=back
-
-The installation directory contains the usual C<Makefile.PL>. Although
-there is nothing needed to install, running
-
-  perl Makefile.PL
-
-will check your installation for completeness.
+(To see what gets installed, and where, use the target C<fakeinstall>
+instead of C<install>).
 
 To set up a new C<TT2Site> site, create a new directory. In this
 directory, issue the following command:
 
-  $ make -f $TT2SITE_LIB/common.mk setup
+  $ tt2site setup
 
 This will populate the directory with the necessary files and
-directories to create the web site. Among these is a B<Makefile> which
-provides the following targets:
+directories to create the web site. You can now use the C<tt2site>
+program with the following subcommands:
 
 =over 4
 
@@ -163,7 +161,7 @@ files).
 B<realclean>
 
 Cleanup the generated data and the files originally installed with the
-setup.
+setup. If you modified any of them, you'll lose your changes.
 
 =back
 
@@ -216,10 +214,10 @@ simple site basically containing this documentation. C<sample1> is the
 same site in multi-language form. To use either site, change to the
 appropriate directory, and issue the commands:
 
-  $ make -f $TT2SITE_LIB/common.mk setup
-  $ make
+  $ tt2site setup
+  $ tt2site build
   ... point your browser at html/index.html ...
-  $ make clean
+  $ tt2site realclean
 
 =head1 DEPENDENCIES
 
@@ -249,7 +247,7 @@ This product is better than this documentation.
 
 Johan Vromans (jvromans@squirrel.nl) wrote this software.
 
-Many things were borrowed and adapted from the Templat Toolkit
+Many things were borrowed and adapted from the Template Toolkit
 materials and the Badger book.
 
 Web site: L<http://www.squirrel.nl/people/jvromans/tt2site/index.html>.
@@ -274,4 +272,4 @@ GNU General Public License or the Artistic License for more details.
 
 1;
 
-# $Id: TT2Site.pm,v 1.3 2004/12/05 17:20:34 jv Exp $
+# $Id: TT2Site.pm,v 1.4 2004/12/10 22:08:56 jv Exp $

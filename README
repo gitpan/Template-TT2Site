@@ -15,5 +15,9 @@ simplified for ease of use, and a couple of neat features are added:
 * The 'site.map' hash, required for site navigation, is created
   automatically using minimal, position independent, directions.
 
+All functions are executed using a driver program, making the package
+platform independent. Installation takes place using the platform
+independent Module::Build tool.
+
 For more information, see the Template/TT2Site.pm module.
 

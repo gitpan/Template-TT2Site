@@ -1,0 +1,21 @@
+--- #YAML:1.0
+name: Template-TT2Site
+version: 0.20
+author: ~
+abstract: ~
+license: perl
+requires:
+  AppConfig: 1.56
+  Getopt::Long: 2.1
+  Template: 2.13
+recommends:
+  Getopt::Long: 2.32
+  Template: 2.14
+provides:
+  Template::TT2Site:
+    file: lib/Template/TT2Site.pm
+    version: 1.4
+  Template::TT2Site::Plugin::Mapper:
+    file: lib/Template/TT2Site/Plugin/Mapper.pm
+    version: 1.02
+generated_by: Module::Build version 0.2606

@@ -1,12 +1,12 @@
 <p>To set up a new <tt>Template::TT2Site</tt> site, create a new
 directory. In this directory, issue the following command:
 
-<pre>  $ make -f $TT2SITE_LIB/common.mk setup
+<pre>  $ tt2site setup
 </pre>
 
 <p>This will populate the directory with the necessary files and
-directories to create the web site. Among these is a <tt>Makefile</tt>
-which provides the following targets:
+directories to create the web site.
+<p>You can use the following subcommands with <tt>tt2site</tt>:
 
 <ul>
   <li><b>build</b> (default)
@@ -27,3 +27,6 @@ directory, the templates <tt>config/site</tt> and
 <br>If you want to make a multi-lingual site you need to create an
 appropriate <tt>config/lang</tt>. But in many cases this will be all
 you need to get started creating your web pages.
+<p>Note: You have to use the <tt>realclean</tt> and <tt>setup</tt>
+subcommands when you make significant changes to your <tt>tt2tree</tt>
+installation, e.g., after upgrade to a new version.

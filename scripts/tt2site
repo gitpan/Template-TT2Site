@@ -1,0 +1,330 @@
+#!/usr/bin/perl -w
+my $RCS_Id = '$Id: tt2site,v 1.1 2004/12/10 21:41:24 jv Exp $ ';
+
+# Skeleton for Getopt::Long.
+
+# Author          : Johan Vromans
+# Created On      : Mon Dec  6 21:48:07 2004
+# Last Modified By: Johan Vromans
+# Last Modified On: Fri Dec 10 22:40:48 2004
+# Update Count    : 105
+# Status          : Unknown, Use with caution!
+
+################ Common stuff ################
+
+use strict;
+
+# Package name.
+my $my_package = 'TT2Site';
+# Program name and version.
+my ($my_name, $my_version) = $RCS_Id =~ /: (.+).pl,v ([\d.]+)/;
+# Tack '*' if it is not checked in into RCS.
+$my_version .= '*' if length('$Locker:  $ ') > 12;
+
+################ Command line parameters ################
+
+my $realclean = 0;
+my $verbose = 0;		# more verbosity
+
+# Development options (not shown with --help).
+my $debug = 0;			# debugging
+my $trace = 0;			# trace (show process)
+my $test = 0;			# test mode.
+
+# Process command line options.
+appx_options();
+
+# Post-processing.
+$trace |= ($debug || $test);
+
+################ Presets ################
+
+my $TMPDIR = $ENV{TMPDIR} || $ENV{TEMP} || '/usr/tmp';
+
+################ The Process ################
+
+sub _cf { File::Spec->catfile(@_) }
+
+my $lib = $ENV{TT2SITE_LIB};
+my $sitelib;
+if ( $lib ) {
+    unless ( -f File::Spec->catfile($lib, qw(Template TT2Site.pm)) ) {
+	die("$my_name: Installation problem!\n",
+	    "Cannot find Template::TT2Site in $lib\n",
+	    "Please verify your installation, or set environment variable ",
+	    "TT2SITE_LIB to the directory containing Template/TT2Site.pm\n");
+    }
+    $sitelib = $lib;
+}
+else {
+    foreach $lib ( @INC ) {
+	# warn("Trying: " . _cf($lib, qw(Template TT2Site.pm)) . "\n");
+	$sitelib = $lib, last if -f _cf($lib, qw(Template TT2Site.pm))
+    }
+}
+
+unless ( -f _cf($sitelib, qw(Template TT2Site.pm)) ) {
+    die("$my_name: Installation problem!\n",
+	"Cannot find Template::TT2Site in $sitelib or \@INC\n",
+	"Please verify your installation, or set environment variable ",
+	"TT2SITE_LIB to the directory containing Template/TT2Site.pm\n");
+}
+
+my $setupdone = ".setupdone";
+
+my $commands = {
+   setup     => \&cmd_setup,
+   build     => \&cmd_build,
+   rebuild   => \&cmd_rebuild,
+   publish   => \&cmd_publish,
+   clean     => \&cmd_clean,
+   realclean => \&cmd_realclean,
+};
+
+@ARGV = qw(build) unless @ARGV;
+
+my $cmd = $commands->{shift(@ARGV)};
+
+usage(1) unless $cmd;
+
+use File::Spec;
+use File::Path;
+use File::Find;
+use File::Copy;
+
+my ($filesep, $pathsep) =
+  File::Spec->devnull eq "nul" ? (";","\\") : (":","/");
+
+# Find ttree.
+my $ttree = "ttree";
+foreach my $p ( File::Spec->path ) {
+    if ( -s "$p/$ttree.pl" ) {
+	$ttree = "$p/$ttree.pl";
+	last;
+    }
+    if ( -s "$p/$ttree" && -x _ ) {
+	$ttree = "$p/$ttree";
+	last;
+    }
+}
+die("$my_name: Could not find ttree or ttree.pl in PATH\n")
+  if $ttree eq "ttree";
+
+if ( $cmd ne \&cmd_setup && ! -f $setupdone ) {
+    die("$my_name: Please run \"$my_name setup\" first\n");
+}
+
+exit $cmd->(@ARGV);
+
+################ Subroutines ################
+
+sub cmd_setup {
+    if ( -f $setupdone ) {
+	warn("$my_name: \"setup\" already done\n");
+	return 0;
+    }
+
+    my $dir  = File::Spec->rel2abs(File::Spec->curdir);
+    my $lib  = _cf($sitelib, qw(Template TT2Site));
+    my $skel = _cf($lib, qw(setup data));
+
+    unshift(@ARGV,
+	    '-s', $skel,
+	    '-d', $dir,
+	    '-f', _cf($lib, qw(setup etc ttree.cfg)),
+	    '--define', "dir=$dir",
+	    '--define', "sitelib=". $lib,
+	    '--define', "tmplsrc=src",
+	    '--define', "debug=$debug");
+
+    unshift(@ARGV, "perl", $ttree);
+
+    warn("+ @ARGV\n") if $trace;
+    system $^X @ARGV;
+    die("$my_name: ttree did not complete\n") if $?;
+    die("$my_name: ttree did not complete\n")
+      unless -f _cf(qw(etc ttree.cfg));
+
+    chmod(0664, _cf(qw(etc ttree.cfg)));
+    chmod(0664, _cf(qw(src css site.css)));
+    chmod(0664, _cf(qw(src debug.html)));
+    open(my $fh, ">$setupdone");
+
+    return 0;
+}
+
+sub cmd_build {
+    my (@args) = qw(-f etc/ttree.cfg);
+
+    unshift(@args, "perl", "-Mlib=$sitelib", $ttree);
+    warn("+ @args\n") if $trace;
+    system $^X @args;
+    die("$my_name: ttree did not complete\n$@") if $?;
+    return 0;
+}
+
+sub cmd_rebuild {
+    my (@args) = qw(-a -f etc/ttree.cfg);
+
+    unshift(@args, "perl", "-Mlib=$sitelib", $ttree);
+    warn("+ @args\n") if $trace;
+    system $^X @args;
+    die("$my_name: ttree did not complete\n$@") if $?;
+    return 0;
+}
+
+sub cmd_publish {
+    die("$my_name: \"publish\" not yet implemented\n");
+    return 0;
+}
+
+sub cmd_clean {
+    rmtree(["html"], $verbose, 1);
+    find(sub {
+	     if ( /~$/ ) {
+		 warn("+ rm $File::Find::name\n");
+		 unlink($File::Find::name);
+	     }
+	 }, ".");
+    return 0;
+}
+
+sub cmd_realclean {
+    print STDERR ("WARNING: ",
+		  "Your customisations to copied files will be lost!\n",
+		  "Hit Enter to continue, Control-C to cancel ");
+    <STDIN>;
+
+    cmd_clean;
+
+    my @files;
+    use Cwd;
+    my $cur = getcwd;
+    chdir(_cf($sitelib, qw(Template TT2Site setup data)));
+    find(sub {
+	     return unless -f $_;
+	     push(@files, $File::Find::name);
+	 }, ".");
+    chdir($cur);
+
+    foreach my $file ( @files, $setupdone ) {
+	warn("+ rm $file\n");
+	unlink($file);
+    }
+
+    foreach my $dir ( _cf(qw(src images)),
+		      _cf(qw(src css)),
+		      _cf(qw(src)),
+		      _cf(qw(etc)) ) {
+	rmdir($dir) && warn("+ rmdir $dir\n");
+    }
+
+    return 0;
+}
+
+################ Command Line Options ################
+
+use Getopt::Long 2.34;		# will enable help/version
+
+sub appx_options {
+
+    GetOptions(ident	   => \&appx_ident,
+	       verbose	   => \$verbose,
+
+	       # development options
+	       test	   => \$test,
+	       trace	   => \$trace,
+	       debug	   => \$debug)
+      or Getopt::Long::HelpMessage(2);
+}
+
+sub appx_ident {
+    print STDOUT ("This is $my_package [$my_name $my_version]\n");
+}
+
+__END__
+
+=head1 NAME
+
+tt2site - Template Toolkit site builder
+
+=head1 SYNOPSIS
+
+tt2site [options] [setup|build|rebuild|clean|realclean]
+
+Options:
+
+   --ident		show identification
+   --help		brief help message
+   --verbose		verbose information
+
+=head1 COMMANDS
+
+=over 8
+
+=item B<setup>
+
+Initialises a new site directory. This command must be run once before
+you can do anything else.
+
+=item B<build>
+
+Run the C<ttree> application to update the site files.
+
+=item B<rebuild>
+
+Run the C<ttree> application to completely rebuild all site files.
+
+=item B<clean>
+
+Cleans the generated HTML files, and editor backup files.
+
+=item B<realclean>
+
+Cleans the generated HTML files, editor backup files, and all files
+originally installed using the B<setup> command.
+
+You'll be asked for confirmation before your files are removed.
+
+=back
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--verbose>
+
+More verbose information.
+
+=item B<--version>
+
+Print a version identification to standard output and exits.
+
+=item B<--help>
+
+Print a brief help message to standard output and exits.
+
+=item B<--ident>
+
+Prints a program identification.
+
+=back
+
+=head1 DESCRIPTION
+
+B<tt2site> is the main tool to use the C<Template::TT2Site> program.
+
+=head1 AUTHOR
+
+Johan Vromans <jvromans@squirrel.nl>
+
+=head1 COPYRIGHT
+
+This programs is Copyright 2004, Squirrel Consultancy.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the Perl Artistic License or the GNU General
+Public License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
+
+=cut
