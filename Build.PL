@@ -2,8 +2,8 @@
 # Author          : Johan Vromans
 # Created On      : Tue Nov 30 18:37:07 2004
 # Last Modified By: Johan Vromans
-# Last Modified On: Wed Dec 29 16:13:07 2004
-# Update Count    : 80
+# Last Modified On: Tue Jan  4 13:30:11 2005
+# Update Count    : 84
 # Status          : Experimental
 
 use strict;
@@ -17,9 +17,12 @@ my $installscript = $Config{installscript};
 
 print STDERR <<EOD unless $installscript eq $usrbin;
 
-WARNING: This Makefile will install user accessible scripts.
-The location for these scripts is $installscript.
-See the documentation of Module::Build on how to change this.
+WARNING: This Build file will install a user accessible script.
+The default location for user accessible scripts is
+$installscript.
+Please consult section "How Installation Paths are Determined"
+of the Module::Build documentation section if you want to change
+this location.
 EOD
 
 # 'ttree' should be in path.
@@ -30,7 +33,7 @@ use TT2SiteModuleBuilder;
 my $build = TT2SiteModuleBuilder->new
   (
    dist_name => 'Template-TT2Site',
-   dist_version => '0.90',
+   dist_version => '0.91',
    license => 'perl',
    requires => {
 		'Getopt::Long' => 2.1,

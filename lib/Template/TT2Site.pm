@@ -3,7 +3,7 @@ package Template::TT2Site;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = sprintf("%d.%02d", q$Revision: 1.42 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.44 $ =~ /(\d+)\.(\d+)/);
 
 use strict;
 
@@ -29,8 +29,9 @@ B<Template::TT2Site> is a framework to create web sites using the
 Template Toolkit.
 
 The technical structure of the site is patterned after the method
-described in I<The Badger Book>. The structure has been slightly
-simplified for ease of use, and a couple of neat features are added:
+described in chapter 11 of I<The Badger Book>. The structure has been
+slightly simplified for ease of use, and a couple of neat features are
+added:
 
 =over 4
 
@@ -99,7 +100,7 @@ Johan Vromans <jvromans@squirrel.nl>
 
 =head1 COPYRIGHT
 
-This programs is Copyright 2004, Squirrel Consultancy.
+This programs is Copyright 2004,2005, Squirrel Consultancy.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the Perl Artistic License or the GNU General
@@ -174,12 +175,16 @@ my $test = 0;			# test mode.
 my $setupdone = ".setupdone";
 my $ttree = "ttree";
 my $sitelib;
+my @cmds;
+my %help;
 
 ################ The Process ################
 
 use File::Spec;
 use File::Path;
 use File::Find;
+use File::Copy;
+use File::Basename;
 use Carp;
 
 ################ Subroutines ################
@@ -202,6 +207,19 @@ sub _preamble($;$) {
     _check_setup() unless @_ && $_[0];
 }
 
+INIT {
+    push(@cmds, "setup");
+    $help{$cmds[-1]} = <<EOD;
+Initialises a new site directory. This command must be run
+once before you can do anything else.
+EOD
+}
+my @samples;
+INIT {
+    @samples = ( [ qw(lib config site) ],
+		 [ qw(lib config images) ],
+	       );
+}
 sub setup {
     _preamble("setup", 1);
 
@@ -231,14 +249,35 @@ sub setup {
     croak("$my_name: ttree did not complete\n")
       unless -f _cf(qw(etc ttree.cfg));
 
-    chmod(0664, _cf(qw(etc ttree.cfg)));
-    chmod(0664, _cf(qw(src css site.css)));
-    chmod(0664, _cf(qw(src debug.html)));
+    chmod(0666, _cf(qw(etc ttree.cfg)));
+    chmod(0666, _cf(qw(src css site.css)));
+    chmod(0666, _cf(qw(src debug.html)));
+
+    # Provide some sample data.
+    foreach my $ss ( @samples ) {
+	my $fn = _cf(@$ss);
+	mkpath([dirname($fn)], 1, 0777);
+	if ( -e $fn ) {
+	    warn("File $fn exists, not overwritten\n");
+	    next;
+	}
+	warn("Copying sample $fn\n");
+	copy(_cf($lib, $fn), $fn);
+	chmod(0666, $fn)
+	  or warn("Error copying $fn: $!\n");
+    }
+
     open(my $fh, ">$setupdone");
 
     return 0;
 }
 
+INIT {
+    push(@cmds, "build");
+    $help{$cmds[-1]} = <<EOD;
+Runs the 'ttree' application to update the site files.
+EOD
+}
 sub build {
     _preamble("build");
 
@@ -251,6 +290,13 @@ sub build {
     return 0;
 }
 
+INIT {
+    push(@cmds, "rebuild");
+    $help{$cmds[-1]} = <<EOD;
+Runs the 'ttree' application to completely rebuild
+the site files.
+EOD
+}
 sub rebuild {
     _preamble("rebuild");
 
@@ -270,6 +316,12 @@ sub publish {
     return 0;
 }
 
+INIT {
+    push(@cmds, "clean");
+    $help{$cmds[-1]} = <<EOD;
+Cleans the generated HTML files, and editor backup files.
+EOD
+}
 sub clean {
     _preamble("clean") unless @_ && $_[0];
 
@@ -283,6 +335,17 @@ sub clean {
     return 0;
 }
 
+INIT {
+    push(@cmds, "realclean");
+    $help{$cmds[-1]} = <<EOD;
+Cleans the generated HTML files, editor backup files,
+and all files originally installed using the 'setup'
+command.
+
+You'll be asked for confirmation before your files are
+removed.
+EOD
+}
 sub realclean {
     _preamble("realclean");
     print STDERR ("WARNING: ",
@@ -292,6 +355,7 @@ sub realclean {
 
     clean(1);
 
+    my $lib  = _cf($sitelib, qw(Template TT2Site));
     my @files;
     my @chfiles;
     use Cwd;
@@ -318,9 +382,23 @@ sub realclean {
 	unlink($file);
     }
 
+    # Remove sample data only if not modified.
+    foreach my $ss ( @samples ) {
+	my $fn = _cf(@$ss);
+	if ( _differ(_cf($lib, $fn), $fn) ) {
+	    warn("$fn has been modified -- not removed\n");
+	    next;
+	}
+	warn("+ rm $fn\n");
+	unlink($fn)
+	  or warn("Error removing $fn: $!\n");
+    }
+
     foreach my $dir ( _cf(qw(src images)),
 		      _cf(qw(src css)),
 		      _cf(qw(src)),
+		      _cf(qw(lib config)),
+		      _cf(qw(lib)),
 		      _cf(qw(etc)) ) {
 	rmdir($dir) && warn("+ rmdir $dir\n");
     }
@@ -329,6 +407,20 @@ sub realclean {
 }
 
 ################ Helpers ################
+
+sub command_help {
+    my $self = shift;
+
+    foreach my $cmd ( @cmds ) {
+	my $tag = "$cmd\t";
+	foreach ( split(/\n/, $help{$cmd}) ) {
+	    print STDOUT ($tag, $_, "\n");
+	    $tag = "\t";
+	}
+	print STDOUT "\n";
+    }
+    exit(0);
+}
 
 sub _find_ttree {
     $ttree = "ttree";
@@ -428,10 +520,18 @@ sub _options {
 	       test	   => \$test,
 	       trace	   => \$trace,
 	       debug	   => \$debug)
-      or usage(2);
+      or _usage(2);
 
     # Post-processing.
     $trace |= ($debug || $test);
+}
+
+sub _usage {
+    my ($ret) = (@_);
+    print STDERR ("Commands: ", join(", ", @cmds), ".\n\n",
+		  "Options:\n\n",
+		  "    --verbose     increase verbosity\n");
+    exit($ret) if defined $ret;
 }
 
 1;

@@ -2,4 +2,5 @@ title Contents
 name  TT2Site
 menu "Overview" index
 menu "User guide" userguide
+menu "Download"  download
 menu "Contact"  contact

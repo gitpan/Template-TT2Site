@@ -6,11 +6,11 @@ SWITCH page.type;
 	content;
 
     CASE "html";
-	content WRAPPER page/html
-		      + page/layout;
+	content WRAPPER page/html.html
+		      + page/layout.html;
 
     CASE "nolayout";
-	content WRAPPER page/html;
+	content WRAPPER page/html.html;
 
     CASE;
 	THROW page.type "Invalid page type: $page.type";

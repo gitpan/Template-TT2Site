@@ -1,30 +1,61 @@
-A <b>Template::TT2Site</b> site is configured to take templates from two
+<b>Template::TT2Site</b> works with two main sub-directories: 'src'
+and 'html'.  These contain the raw input and the final output versions
+of your website.
+
+<p>The 'src' directory is created when you run <code>setup<code>, and
+the 'html' directory is created when you first use the <code>build</code>
+subcommand.
+
+<p>By default, <b>tt2site</b> creates the following subdirectiories in
+'src':
+<pre>    src/images
+    src/css
+</pre>
+
+<p><code>css</code> contains the style sheet for the site. As you
+might guess, you can edit <code>css/site.css</code> to change a number
+of aspects of the look of your website one place.
+
+You will also see that an 'etc' directory has been created, with
+this file in it:
+
+<pre>    etc/ttree.cfg
+</pre>
+
+You shouldn't need to modify this.
+
+<p>What you do need to modify are the files in the 'lib' directory:
+<pre>    lib/config/site
+    lib/config/images
+</pre>
+
+<b>Template::TT2Site</b> site is configured to take templates from two
 sources: from the local directory, and from the <b>TT2Site</b> library.
 The templates in the library directory provide (almost) all the
 necessary information to create the site (except for the contents, of
 course), the library templates can be overruled locally to customize a
 particular site.
 
-<p>The library templates reside in the <code>lib</code> directory. Its
-major subdirectories are <code>config</code> (configuration data),
-<code>page</code> (page formatting), and <code>util</code> (utility
-functions).
+<p>The <b>TT2Site</b> library templates reside in the <code>lib</code>
+directory. Its major subdirectories are <code>config</code>
+(configuration data), <code>page</code> (page formatting), and
+<code>util</code> (utility functions).
 
 <p>For the time being, the contents of the files need to be taken as a
 guide how to write your own. Here is a short description of some
 files:
 
 <dl>
-<dt><code>site/main</code>
+<dt><code>config/main</code>
 <dd>This file controls which other files from the site directory are taken into account.
-<dt><code>site/config</code>
+<dt><code>config/site</code>
 <dd>The site data like title and subject. This file must be overridden with actual data.
-<dt><code>site/images</code>
+<dt><code>config/images</code>
 <dd>The definition of images to be used with the util/image template function.
-<dt><code>site/lang</code>
+<dt><code>config/lang</code>
 <dd>The definition of the languages to be used by this site.
 <dt><code>page/wrapper</code>
-<dd>This fike controls what templates are applied when processing user files.
+<dd>This file controls what templates are applied when processing user files.
 <dt><code>page/html</code>
 <dd>This template provides the general HTML structure of the generated pages.
 <dt><code>page/layout</code>

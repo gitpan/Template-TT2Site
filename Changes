@@ -1,3 +1,10 @@
+* 0.91 Jan 04, 2005
+
+   - Many documentation changes and enhancements.
+   - Fix the missing _usage() function.
+   - Rename most page/* files to *.html to reflect their HTML nature.
+   - Other bug fixes.
+
 * 0.90 Dec 29, 2004
 
    - Approaching maturity.
