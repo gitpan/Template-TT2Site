@@ -1,0 +1,32 @@
+A <b>Template::TT2Site</b> site is configured to take templates from two
+sources: from the local directory, and from the <b>TT2Site</b> library.
+The templates in the library directory provide (almost) all the
+necessary information to create the site (except for the contents, of
+course), the library templates can be overruled locally to customize a
+particular site.
+
+<p>The library templates reside in the <code>lib</code> directory. Its
+major subdirectories are <code>config</code> (configuration data),
+<code>page</code> (page formatting), and <code>util</code> (utility
+functions).
+
+<p>For the time being, the contents of the files need to be taken as a
+guide how to write your own. Here is a short description of some
+files:
+
+<dl>
+<dt><code>site/main</code>
+<dd>This file controls which other files from the site directory are taken into account.
+<dt><code>site/config</code>
+<dd>The site data like title and subject. This file must be overridden with actual data.
+<dt><code>site/images</code>
+<dd>The definition of images to be used with the util/image template function.
+<dt><code>site/lang</code>
+<dd>The definition of the languages to be used by this site.
+<dt><code>page/wrapper</code>
+<dd>This fike controls what templates are applied when processing user files.
+<dt><code>page/html</code>
+<dd>This template provides the general HTML structure of the generated pages.
+<dt><code>page/layout</code>
+<dd>This template defines the structure of the generated pages. It uses the familiar table approach with cells containing the logo, header, menu, contents, footer, and so on.
+</dl>

@@ -2,3 +2,5 @@ menu "Installation" index
 menu "Getting started" new
 menu "Menu creation" menu
 menu "Multi-language sites" lang
+menu "Example sites" example
+menu "Site structure" struct

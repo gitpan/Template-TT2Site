@@ -1,0 +1,27 @@
+* 0.90 Dec 29, 2004
+
+   - Approaching maturity.
+   - All code from the tt2site tool has been moved to
+     Template/TT2Site.pm.
+   - tt2site is now a very simple wrapper.
+   - Multiple installations can be maintained using the TT2SITE_LIB
+     environment variable.
+   - All documentation is moved to the sample0 site.
+   - Example sites are moved from src to examples.
+
+* 0.22 Dec 12, 2004
+
+   - Small fixes, not worth mentioning.
+   - Change CHANGES to Changes.
+
+* 0.21 Dec 11, 2004
+
+   - Mainly cosmetic changes in documentation.
+
+* 0.20 Dec 10, 2004
+
+   - First beta release in the new structure.
+
+* 0.01 Dec 05, 2004
+
+   - First alpha release.
