@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name: Template-TT2Site
-version: 0.20
+version: 0.21
 author: ~
 abstract: ~
 license: perl
@@ -14,7 +14,7 @@ recommends:
 provides:
   Template::TT2Site:
     file: lib/Template/TT2Site.pm
-    version: 1.4
+    version: 1.05
   Template::TT2Site::Plugin::Mapper:
     file: lib/Template/TT2Site/Plugin/Mapper.pm
     version: 1.02

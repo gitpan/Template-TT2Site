@@ -1,6 +1,9 @@
 package Template::TT2Site;
 
-( $VERSION ) = '$Revision: 1.4 $ ' =~ /\$Revision:\s+([^\s]+)/;
+use strict;
+use vars qw($VERSION);
+
+$VERSION = sprintf("%d.%02d", q$Revision: 1.5 $ =~ /(\d+)\.(\d+)/);
 
 # NOTE: This is a documentation-only module.
 
@@ -118,13 +121,10 @@ location, and issue the following commands:
 instead of C<install>).
 
 Alternatively, you can use the C<CPAN> or C<CPANPLUS> tools to install
-C<t2site> for you.
+C<tt2site> for you.
 
 Note that the last command requires write access to your local Perl
 installtion.
-
-(To see what gets installed, and where, use the target C<fakeinstall>
-instead of C<install>).
 
 To set up a new C<TT2Site> site, create a new directory. In this
 directory, issue the following command:
@@ -228,14 +228,14 @@ available on CPAN:
 
 =item *
 
-Template::Toolkit, version 2.13 (preferrably 2.14) or later.
+B<Template::Toolkit>, version 2.13 (preferrably 2.14) or later.
 
 B<Template::TT2Site> uses the B<ttree> tool, which is assumed to be
-available in your execution path.
+available in your execution path I<as a Perl script>.
 
 =item *
 
-AppConfig. This is used by the B<ttree> tool.
+B<AppConfig>. This is used by the B<ttree> tool.
 
 =back
 
@@ -272,4 +272,4 @@ GNU General Public License or the Artistic License for more details.
 
 1;
 
-# $Id: TT2Site.pm,v 1.4 2004/12/10 22:08:56 jv Exp $
+# $Id: TT2Site.pm,v 1.5 2004/12/11 09:22:22 jv Exp $

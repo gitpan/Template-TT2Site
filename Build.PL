@@ -2,8 +2,8 @@
 # Author          : Johan Vromans
 # Created On      : Tue Nov 30 18:37:07 2004
 # Last Modified By: Johan Vromans
-# Last Modified On: Fri Dec 10 23:08:31 2004
-# Update Count    : 78
+# Last Modified On: Sat Dec 11 09:59:43 2004
+# Update Count    : 79
 # Status          : Experimental
 
 use strict;
@@ -30,7 +30,7 @@ use TT2SiteModuleBuilder;
 my $build = TT2SiteModuleBuilder->new
   (
    dist_name => 'Template-TT2Site',
-   dist_version => '0.20',
+   dist_version => '0.21',
    license => 'perl',
    requires => {
 		'Getopt::Long' => 2.1,
