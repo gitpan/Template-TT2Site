@@ -1,9 +1,9 @@
-[% # $Id: trail,v 1.3 2005/01/05 18:00:02 jv Exp $ -%]
+[% # $Id: trail,v 1.4 2005/02/02 19:34:06 jv Exp $ -%]
 <table border="0" cellpadding="0" cellspacing="2">
   <tr valign="middle">
 [% FOREACH item IN trail %]
     <td class="info"></td>
-    <td>[% PROCESS menu/text
+    <td>[% INCLUDE menu/text
               link = {
                   text     = item.name
                   url      = site.topdir _ item.url

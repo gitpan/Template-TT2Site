@@ -1,49 +1,49 @@
-[% # $Id: layout,v 1.5 2005/01/16 16:09:40 jv Exp $ -%]
+[% # $Id: layout,v 1.6 2005/02/02 19:34:06 jv Exp $ -%]
 <table width="100%" border="0" cellpadding="0" cellspacing="5">
 
   <tr valign="top">
     <td width="[% site.logowidth + 10 %]" align="left">
-      [% PROCESS page/logo %]
+      [% INCLUDE page/logo %]
     </td>
     <td>
       [% IF site.languages && template.name.search('^\w\w/') -%]
         <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	  <tr>
 	    <td align="left" valign="top">
-              [% PROCESS page/header %]
+              [% INCLUDE page/header %]
 	    </td>
 	    <td align="right" valign="top">
-              [% PROCESS page/lang %]
+              [% INCLUDE page/lang %]
 	    </td>
 	  </tr>
 	</table>
       [% ELSE -%]
-        [% PROCESS page/header %]
+        [% INCLUDE page/header %]
       [% END -%]
     </td>
   </tr>
 
   <tr>
     <td>
-      [% PROCESS page/name %]
+      [% INCLUDE page/name %]
     </td>
     <td>
-      [% PROCESS page/navigate %]
+      [% INCLUDE page/navigate %]
     </td>
   </tr>
 
   <tr>
     <td>
-      [% PROCESS util/line %]
+      [% INCLUDE util/line %]
     </td>
     <td>
-      [% PROCESS util/line %]
+      [% INCLUDE util/line %]
     </td>
   </tr>
 
   <tr valign="top">
     <td>
-      [% PROCESS page/menu UNLESS page.suppress_menu %]
+      [% INCLUDE page/menu UNLESS page.suppress_menu %]
     </td>
     <td>
       [% content %]
@@ -52,19 +52,19 @@
 
   <tr>
     <td>
-      [% PROCESS util/line %]
+      [% INCLUDE util/line %]
     </td>
     <td>
-      [% PROCESS util/line %]
+      [% INCLUDE util/line %]
     </td>
   </tr>
 
   <tr valign="bottom">
     <td valign="middle">
-      [% PROCESS page/credits %]
+      [% INCLUDE page/credits %]
     </td>
     <td align="center">
-      [% PROCESS page/footer %]
+      [% INCLUDE page/footer %]
     </td>
   </tr>
 

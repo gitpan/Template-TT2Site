@@ -1,10 +1,10 @@
 # build_common.pl -- Build file common info
-# RCS Info        : $Id: build_common.pl,v 1.4 2005/01/16 16:09:40 jv Exp $
+# RCS Info        : $Id: build_common.pl,v 1.5 2005/02/27 15:34:33 jv Exp $
 # Author          : Johan Vromans
 # Created On      : Wed Jan  5 16:44:56 2005
 # Last Modified By: Johan Vromans
-# Last Modified On: Sun Jan 16 16:46:03 2005
-# Update Count    : 7
+# Last Modified On: Sun Feb 27 16:34:30 2005
+# Update Count    : 8
 # Status          : Unknown, Use with caution!
 
 use strict;
@@ -13,7 +13,7 @@ use File::Spec;
 
 our $data;
 
-$data->{version} = "0.94";
+$data->{version} = "0.95";
 
 $data->{author} = 'Johan Vromans (jvromans@squirrel.nl)';
 $data->{abstract} = 'Build standard web sites using the Template Toolkit';

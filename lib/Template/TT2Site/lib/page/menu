@@ -1,4 +1,4 @@
-[% # $Id: menu,v 1.4 2005/01/16 16:09:40 jv Exp $ -%]
+[% # $Id: menu,v 1.5 2005/02/02 19:34:06 jv Exp $ -%]
 <div class="sidemenu">
 <table border="0" cellpadding="0" cellspacing="0">
   <tr>
@@ -6,7 +6,7 @@
     </td>
   </tr>
   <tr>
-    <td>[% PROCESS util/line %]</td>
+    <td>[% INCLUDE util/line %]</td>
   </tr>
   <tr valign="top">
     <td align="left">

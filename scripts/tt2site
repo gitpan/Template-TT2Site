@@ -1,11 +1,11 @@
 #!/usr/bin/perl -w
-my $RCS_Id = '$Id: tt2site,v 1.4 2005/01/03 13:25:13 jv Exp $ ';
+my $RCS_Id = '$Id: tt2site,v 1.5 2005/02/27 15:34:03 jv Exp $ ';
 
 # Author          : Johan Vromans
 # Created On      : Mon Dec  6 21:48:07 2004
 # Last Modified By: Johan Vromans
-# Last Modified On: Mon Jan  3 13:02:38 2005
-# Update Count    : 151
+# Last Modified On: Fri Feb  4 21:12:51 2005
+# Update Count    : 153
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -33,7 +33,7 @@ sub usage(;$);
 
 @ARGV = qw(build) unless @ARGV;
 
-use Getopt::Long qw(:config require_order no_ignore_case);
+use Getopt::Long qw(:config require_order no_ignore_case pass_through);
 
 GetOptions("ident"     => sub { ident(*STDERR) },
 	   "version|V" => sub { ident(*STDOUT); exit(0); },

@@ -3,7 +3,7 @@ package Template::TT2Site;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = sprintf("%d.%02d", q$Revision: 1.45 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.46 $ =~ /(\d+)\.(\d+)/);
 
 use strict;
 
@@ -309,6 +309,32 @@ sub rebuild {
     return 0;
 }
 
+INIT {
+    push(@cmds, "fetch");
+    $help{$cmds[-1]} = <<EOD;
+Copies files from the TT2Site library to the local tree.
+EOD
+}
+sub fetch {
+    _preamble("fetch");
+    my $lib  = _cf($sitelib, qw(Template TT2Site));
+
+    foreach my $file ( @ARGV ) {
+	my $f = _cf($lib, $file);
+	unless ( -f $f ) {
+	    carp("File not in TT2Site library: $file");
+	    next;
+	}
+	my $dir = dirname($file);
+	my $base = basename($file);
+	mkpath([$dir], 1, 0777) unless -d $dir;
+	copy($f, $file);
+	chmod(0666, $file);
+    }
+
+    return 0;
+}
+
 sub publish {
     _preamble("publish");
 
@@ -328,8 +354,9 @@ sub clean {
     rmtree(["html"], $verbose, 1);
     find(sub {
 	     if ( /~$/ ) {
-		 warn("+ rm $File::Find::name\n");
-		 unlink($File::Find::name);
+		 warn("+ rm $File::Find::name\n") if $verbose;
+		 unlink($_)
+		   or warn("$File::Find::name: $!\n");
 	     }
 	 }, ".");
     return 0;

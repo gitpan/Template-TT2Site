@@ -1,4 +1,4 @@
-[% # $Id: lang,v 1.2 2004/12/05 11:57:46 jv Exp $ -%]
+[% # $Id: lang,v 1.3 2005/02/02 19:34:06 jv Exp $ -%]
 [%
 
 # Provide links to language alternatives.
@@ -17,7 +17,7 @@ FOREACH lang IN site.languages;
         other = template.name.replace("^$site.lang/","$site.realtop$lang/");
       
 	"<a href=\"$other\">";
-	PROCESS util/image image = site.image.flags.$lang;
+	INCLUDE util/image image = site.image.flags.$lang;
 	"</a>";
       CATCH;
         "<!-- No file: " _ tryfile _ " -->";

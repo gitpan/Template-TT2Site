@@ -1,21 +1,13 @@
---- #YAML:1.0
-name: Template-TT2Site
-version: 0.94
-author: ~
-abstract: ~
-license: perl
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         Template-TT2Site
+version:      0.95
+version_from: 
+installdirs:  site
 requires:
-  AppConfig: 1.56
-  Getopt::Long: 2.1
-  Template: 2.13
-recommends:
-  Getopt::Long: 2.32
-  Template: 2.14
-provides:
-  Template::TT2Site:
-    file: lib/Template/TT2Site.pm
-    version: 1.45
-  Template::TT2Site::Plugin::Mapper:
-    file: lib/Template/TT2Site/Plugin/Mapper.pm
-    version: 1.02
-generated_by: Module::Build version 0.2606
+    AppConfig:                     1.56
+    Getopt::Long:                  2.1
+    Template:                      2.13
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.17
